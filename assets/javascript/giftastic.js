@@ -11,31 +11,31 @@
 
 // 1. Before you can make any part of your site work, you need to create an array of strings, each one related to a topic that interests you. Save it to a variable called `topics`.
 
-var topics = ["sleeping", "running", "eating", "dancing", "fencing", "dodging", "birds" 
+// Array with topics of interest
+var topics = ["sleeping", "running", "eating", "dancing", "fencing", "dodging", "flying" ];
 
-];
 
 //    * We chose animals for our theme, but you can make a list to your own liking.
 
 // 2. Your app should take the topics in this array and create buttons in your HTML.
 //    * Try using a loop that appends a button for each string in the array.
 
-modify page html to generate buttons for topics.
+// !! modify page html to generate buttons for topics.
 
-could possibly use a for loop to loop through the array and create a button for(each)
+// !! could possibly use a for loop to loop through the array and create a button for(each)
 
 
 
 
 // 3. When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page.
 
-on(click) function for buttons that have names of topics on them. Use api to pull down results. set api result limit to 10 results. results should be static and non-animated. .append the results to the page.
+// !! on(click) function for buttons that have names of topics on them. Use api to pull down results. set api result limit to 10 results. results should be static and non-animated. .append the results to the page.
 
 
 
 // 4. When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
 
-check api for setting to make gif animate when clicked, and stop when clicked again.
+// check api for setting to make gif animate when clicked, and stop when clicked again.
 
 
 
