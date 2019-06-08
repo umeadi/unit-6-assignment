@@ -22,7 +22,8 @@ var APIKey = "tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN"
 // var queryURL = "https://api.giphy.com/v1/gifs/search?q=&api_key=tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN&limit=5"
 
 // Testing to make sure array prints to console
-console.log(" ------------ Verbs Array ------------ ")
+console.log(" <<<<<<*-*-*-*-*-*-*-*-*-*-*-*-*-* Test Area *-*-*-*-*-*-*-*-*-*-*-*-*-*>>>>>>> ")
+console.log(" --------------------------- Verbs Array --------------------------- ")
 console.log(verbs);
 ;
 
@@ -39,10 +40,10 @@ $(document).ready(function(){
 
         // $("#gifButtons").empty(); ************** 
 
-        for (var i = 0; i < verbs.length; i++) {
+        for (var i=0;i<verbs.length;i++){
 
             // Generates new button element for each item in array
-            var b = $("<button>");
+            var b=$("<button>");
 
             // Adds class of gif to each button
             b.addClass("gifSearch");
@@ -65,15 +66,31 @@ $(document).ready(function(){
 
 
     // Click event listener function
-    $(document).on("click", ".gifSearch", function() {
+    $(document).on("click",".gifSearch",function(){
         
-        console.log("You clicked a button!");
+        console.log(" --------------------------- API Response JSON --------------------------- ");
         var type=$(this).data("type");
         var queryURL = "http://api.giphy.com/v1/gifs/search?q="+type+"&api_key=tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN&limit=10"
         $.ajax({
             url: queryURL,
             method: "GET"
         }).done(function(response){
+            for (var i=0;i<response.data.length;i++){
+                var searchDiv = $('<div class="search-item">');
+                var rating = response.data[i].rating;
+                var p = $("<p>").text("Rating: "+rating);
+                var animated = response.data[i].images.fixed_height.url;
+                var still = response.data[i].images.fixed_height_still.url;
+                var image =$("<img>");
+                image.attr("src",still);
+                image.attr("data-still",still);
+                image.attr("data-animated",animated);
+                image.attr("data-state","still");
+                image.addClass("searchImage");
+                searchDiv.append(p);
+                searchDiv.append(image);
+                $("#searches").append(searchDiv);
+            }
             console.log(response);
 
         });
