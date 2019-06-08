@@ -1,18 +1,11 @@
 // In this assignment, you'll use the GIPHY API to make a dynamic web page that populates with gifs of your choice. To finish this task, you must call the GIPHY API and use JavaScript and jQuery to change the HTML of your site.
 
-// **Hit the GIPHY API**.
-//    * Fool around with the GIPHY API. [Giphy API](https://developers.giphy.com/docs/).
-//    * Be sure to read about these GIPHY parameters (hint, hint):
-//      * `q`
-//      * `limit`
-//      * `rating`
-
 
 
 // 1. Before you can make any part of your site work, you need to create an array of strings, each one related to a topic that interests you. Save it to a variable called `topics`.
 
 // Array of verbs
-var verbs = ["sleeping", "running", "eating", "dancing", "fencing", "dodging", "flying" ];
+var topics = ["sleeping", "running", "eating", "dancing", "fencing", "dodging", "flying"];
 
 
 // API Key
@@ -24,94 +17,95 @@ var APIKey = "tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN"
 // Testing to make sure array prints to console
 console.log(" <<<<<<*-*-*-*-*-*-*-*-*-*-*-*-*-* Test Area *-*-*-*-*-*-*-*-*-*-*-*-*-*>>>>>>> ")
 console.log(" --------------------------- Verbs Array --------------------------- ")
-console.log(verbs);
-;
+console.log(topics);
+
 
 // Function that allows HTML to load fully before loading JavaScript/jQuery
-$(document).ready(function(){
-    createButtons(verbs,"searchButton",'#gifButtons');
-    
+$(document).ready(function () {
+    createButtons(topics,'searchButton','#gifButtons');
+    console.log("Page Loaded!");
 })
-    //  Your app should take the topics in this array and create buttons in your HTML.
-    //    * Try using a loop that appends a button for each string in the array.
 
-    // !! modify page html to generate buttons for topics.
+//  Your app should take the topics in this array and create buttons in your HTML.
+//    * Try using a loop that appends a button for each string in the array.
 
-    function createButtons(verbs,classToAdd,areaToAddTo){
+// !! modify page html to generate buttons for topics.
 
-        $(areaToAddTo).empty(); 
+function createButtons(topics,classToAdd,areaToAddTo) {
 
-        for (var i=0;i<verbs.length;i++){
+    $(areaToAddTo).empty();
 
-            // Generates new button element for each item in array
-            var b=$("<button>");
+    for (var i=0;i<topics.length;i++) {
 
-            // Adds class of gif to each button
-            b.addClass(classToAdd);
+        // Generates new button element for each item in array
+        var b=$("<button>");
 
-            // Adds data type to button elements matching the label on button
-            b.attr("data-type", verbs[i]);
+        // Adds class of gif to each button
+        b.addClass(classToAdd);
 
-            // Applies text to buttons to match array item names
-            b.text(verbs[i]);
+        // Adds data type to button elements matching the label on button
+        b.attr('data-type',topics[i]);
 
-            // Appends gif buttons to gifButtons div
-            $(areaToAddTo).append(b);
+        // Applies text to buttons to match array item names
+        b.text(topics[i]);
 
-        }
+        // Appends gif buttons to gifButtons div
+        $(areaToAddTo).append(b);
+
     }
+}
 
-    // 3. When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page.
+// 3. When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page.
 
-    // !! on(click) function for buttons that have names of topics on them. Use api to pull down results. set api result limit to 10 results. results should be static and non-animated. .append the results to the page.
+// !! on(click) function for buttons that have names of topics on them. Use api to pull down results. set api result limit to 10 results. results should be static and non-animated. .append the results to the page.
 
 
-    // Click event listener function
-    $(document).on("click",".gifSearch",function(){
-        
-        // console.log(" --------------------------- API Response JSON --------------------------- ");
-        var type=$(this).data("type");
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q="+type+"&api_key=tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN&limit=10"
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).done(function(response){
-            for (var i=0;i<response.data.length;i++){
-                var searchDiv = $('<div class="search-item">');
-                var rating = response.data[i].rating;
-                var p = $("<p>").text("Rating: "+rating);
-                var animated = response.data[i].images.fixed_height.url;
-                var still = response.data[i].images.fixed_height_still.url;
-                var image =$("<img>");
-                image.attr("src",still);
-                image.attr("data-still",still);
-                image.attr("data-animated",animated);
-                image.attr("data-state","still");
-                image.addClass("searchImage");
-                searchDiv.append(p);
-                searchDiv.append(image);
-                $("#searches").append(searchDiv);
-            }
-            console.log(response);
-
-        });
-
-        
+// Click event listener function
+$(document).on('click','.searchButton',function(){
+    $('#searchResults').empty();
+    // console.log(" --------------------------- API Response JSON --------------------------- ");
+    var type=$(this).data('type');
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q="+type+"&api_key=tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN&limit=10"
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).done(function(response){
+        console.log(response);
+        for(var i=0;i<response.data.length;i++){
+            var searchDiv =$('<div class="search-item">');
+            var rating =response.data[i].rating;
+            var p =$("<p>").text('Rating: ' +rating);
+            var animated = response.data[i].images.fixed_height.url;
+            var still = response.data[i].images.fixed_height_still.url;
+            var image = $("<img>");
+            image.attr("src", still);
+            image.attr("data-still", still);
+            image.attr("data-animated", animated);
+            image.attr("data-state", "still");
+            image.addClass("searchImage");
+            searchDiv.append(p);
+            searchDiv.append(image);
+            $("#searches").append(searchDiv);
+        }
 
     })
 
 
-    
+
+})
 
 
-    
-
-    
-
-    
 
 
-    
+
+
+
+
+
+
+
+
+
 
 // 4. When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
 
