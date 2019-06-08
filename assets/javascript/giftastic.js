@@ -22,7 +22,7 @@ console.log(topics);
 
 // Function that allows HTML to load fully before loading JavaScript/jQuery
 $(document).ready(function () {
-    createButtons(topics,'searchButton','#gifButtons');
+    createButtons(topics, 'searchButton', '#gifButtons');
     console.log("Page Loaded!");
 })
 
@@ -31,27 +31,26 @@ $(document).ready(function () {
 
 // !! modify page html to generate buttons for topics.
 
-function createButtons(topics,classToAdd,areaToAddTo) {
+function createButtons(topics, classToAdd, areaToAddTo) {
 
     $(areaToAddTo).empty();
 
-    for (var i=0;i<topics.length;i++) {
+    for (var i = 0; i < topics.length; i++) {
 
         // Generates new button element for each item in array
-        var b=$("<button>");
+        var b = $("<button>");
 
         // Adds class of gif to each button
         b.addClass(classToAdd);
 
         // Adds data type to button elements matching the label on button
-        b.attr('data-type',topics[i]);
+        b.attr('data-type', topics[i]);
 
         // Applies text to buttons to match array item names
         b.text(topics[i]);
 
         // Appends gif buttons to gifButtons div
         $(areaToAddTo).append(b);
-
     }
 }
 
@@ -61,20 +60,20 @@ function createButtons(topics,classToAdd,areaToAddTo) {
 
 
 // Click event listener function
-$(document).on('click','.searchButton',function(){
+$(document).on('click', '.searchButton', function () {
     $('#searchResults').empty();
     // console.log(" --------------------------- API Response JSON --------------------------- ");
-    var type=$(this).data('type');
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+type+"&api_key=tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN&limit=10"
+    var type = $(this).data('type');
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + type + "&api_key=tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN&limit=10"
     $.ajax({
         url: queryURL,
         method: "GET"
-    }).done(function(response){
+    }).done(function (response) {
         console.log(response);
-        for(var i=0;i<response.data.length;i++){
-            var searchDiv =$('<div class="search-item">');
-            var rating =response.data[i].rating;
-            var p =$("<p>").text('Rating: '+rating);
+        for (var i = 0; i < response.data.length; i++) {
+            var searchDiv = $('<div class="search-item">');
+            var rating = response.data[i].rating;
+            var p = $("<p>").text('Rating: ' + rating);
             var animated = response.data[i].images.fixed_height.url;
             var still = response.data[i].images.fixed_height_still.url;
             var image = $("<img>");
@@ -87,11 +86,26 @@ $(document).on('click','.searchButton',function(){
             searchDiv.append(image);
             $("#searchResults").append(searchDiv);
         }
-
     })
+})
 
+$(document).on('click','.searchImage',function(){
+    var state = $(this).data('state');
+    if(state == 'still'){
+        $(this).attr('src',$(this).data('animated'));
+        $(this).attr('data-state','animated');
 
+    } else {
+        $(this).attr('src',$(this).data('still'));
+        $(this).attr('data-state','still');
+    }
+})
 
+$("#addSearch").on('click',function(){
+    var newSearch =$('input').eq(0).val();
+    topics.push(newSearch);
+    createButtons(topics,'searchButton','#gifButtons');
+    return false;
 })
 
 
