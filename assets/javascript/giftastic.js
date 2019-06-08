@@ -29,16 +29,17 @@ console.log(verbs);
 
 // Function that allows HTML to load fully before loading JavaScript/jQuery
 $(document).ready(function(){
-
+    createButtons(verbs,"searchButton",'#gifButtons');
+    
+})
     //  Your app should take the topics in this array and create buttons in your HTML.
     //    * Try using a loop that appends a button for each string in the array.
 
     // !! modify page html to generate buttons for topics.
 
-    function createButtons(/*verbs*/){
+    function createButtons(verbs,classToAdd,areaToAddTo){
 
-
-        // $("#gifButtons").empty(); ************** 
+        $(areaToAddTo).empty(); 
 
         for (var i=0;i<verbs.length;i++){
 
@@ -46,7 +47,7 @@ $(document).ready(function(){
             var b=$("<button>");
 
             // Adds class of gif to each button
-            b.addClass("gifSearch");
+            b.addClass(classToAdd);
 
             // Adds data type to button elements matching the label on button
             b.attr("data-type", verbs[i]);
@@ -55,7 +56,7 @@ $(document).ready(function(){
             b.text(verbs[i]);
 
             // Appends gif buttons to gifButtons div
-            $("#gifButtons").append(b);
+            $(areaToAddTo).append(b);
 
         }
     }
@@ -68,7 +69,7 @@ $(document).ready(function(){
     // Click event listener function
     $(document).on("click",".gifSearch",function(){
         
-        console.log(" --------------------------- API Response JSON --------------------------- ");
+        // console.log(" --------------------------- API Response JSON --------------------------- ");
         var type=$(this).data("type");
         var queryURL = "http://api.giphy.com/v1/gifs/search?q="+type+"&api_key=tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN&limit=10"
         $.ajax({
@@ -103,10 +104,9 @@ $(document).ready(function(){
     
 
 
-    createButtons();
+    
 
     
-});
 
     
 
