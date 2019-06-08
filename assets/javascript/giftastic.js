@@ -65,7 +65,7 @@ $(document).on('click','.searchButton',function(){
     $('#searchResults').empty();
     // console.log(" --------------------------- API Response JSON --------------------------- ");
     var type=$(this).data('type');
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q="+type+"&api_key=tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN&limit=10"
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+type+"&api_key=tQLmPdwEqwf6dfzOmnOS7LG2gama5VvN&limit=10"
     $.ajax({
         url: queryURL,
         method: "GET"
