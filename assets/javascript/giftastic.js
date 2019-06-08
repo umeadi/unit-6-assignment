@@ -74,7 +74,7 @@ $(document).on('click','.searchButton',function(){
         for(var i=0;i<response.data.length;i++){
             var searchDiv =$('<div class="search-item">');
             var rating =response.data[i].rating;
-            var p =$("<p>").text('Rating: ' +rating);
+            var p =$("<p>").text('Rating: '+rating);
             var animated = response.data[i].images.fixed_height.url;
             var still = response.data[i].images.fixed_height_still.url;
             var image = $("<img>");
@@ -85,7 +85,7 @@ $(document).on('click','.searchButton',function(){
             image.addClass("searchImage");
             searchDiv.append(p);
             searchDiv.append(image);
-            $("#searches").append(searchDiv);
+            $("#searchResults").append(searchDiv);
         }
 
     })
